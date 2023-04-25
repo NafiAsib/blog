@@ -3,28 +3,11 @@ import Link from "next/link";
 import { format, parseISO } from "date-fns";
 import { allPosts } from "contentlayer/generated";
 
-// export async function getStaticPaths() {
-//   const paths = allPosts.map((post) => post.url);
-//   return {
-//     paths,
-//     fallback: false,
-//   };
-// }
-
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
     url: post.url,
   }));
 }
-
-// export async function getStaticProps({ params }) {
-//   const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
-//   return {
-//     props: {
-//       post,
-//     },
-//   };
-// }
 
 const PostLayout = ({ params }) => {
   const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
@@ -33,11 +16,11 @@ const PostLayout = ({ params }) => {
       <Head>
         <title>{post.title}</title>
       </Head>
-      <article className="mx-auto max-w-2xl py-16">
+      <article className="mx-auto max-w-2xl">
         <div className="mb-6 text-center">
-          <Link href="/">
-            <span className="text-center text-sm font-bold uppercase text-blue-700">
-              Home
+          <Link href="/posts">
+            <span className="text-center text-sm font-bold uppercase text-slate-100">
+              Back to all notes
             </span>
           </Link>
         </div>

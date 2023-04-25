@@ -6,12 +6,12 @@ import { allPosts } from "contentlayer/generated";
 function PostCard(post) {
   return (
     <div className="mb-6">
-      <time dateTime={post.date} className="block text-sm text-slate-600">
+      <time dateTime={post.date} className="block text-sm text-slate-100">
         {format(parseISO(post.date), "LLLL d, yyyy")}
       </time>
       <h2 className="text-lg">
         <Link href={post.url}>
-          <span className="text-blue-700 hover:text-blue-900">
+          <span className="text-zinc-500 hover:text-zinc-300">
             {post.title}
           </span>
         </Link>
@@ -22,12 +22,12 @@ function PostCard(post) {
 
 export default function Home({}) {
   return (
-    <div className="mx-auto max-w-2xl py-16 text-center">
+    <div className="mx-auto max-w-2xl  text-center">
       <Head>
-        <title>Contentlayer Blog Example</title>
+        <title>All my notes</title>
       </Head>
 
-      <h1 className="mb-8 text-3xl font-bold">Contentlayer Blog Example</h1>
+      <h1 className="mb-8 text-3xl font-bold">All my notes</h1>
       {allPosts
         .sort((a, b) => {
           return compareDesc(new Date(a.date), new Date(b.date));
