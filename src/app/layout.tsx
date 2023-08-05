@@ -1,6 +1,7 @@
 import { Metadata } from "next";
-import "./globals.css";
 import { Poppins } from "next/font/google";
+import { TailwindIndicator } from "@/components/TailwindIndicator";
+import "./globals.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({
         className={`${poppins.variable} antialiased font-sans bg-gradient-to-r from-gray-700 to-gray-800 max-w-4xl mx-auto mt-20`}
       >
         <main className="">{children}</main>
+        <TailwindIndicator />
       </body>
     </html>
   );
