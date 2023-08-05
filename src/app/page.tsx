@@ -1,4 +1,4 @@
-import ArrowRight from "@/components/icons  ";
+import ArrowRight from "@/components/icons";
 import Link from "next/link";
 
 export const revalidate = 60;
