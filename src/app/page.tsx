@@ -1,28 +1,22 @@
-import ArrowRight from "@/components/icons";
-import Link from "next/link";
+import PostList from "@/components/PostList";
 
 export const revalidate = 60;
 
 export default async function HomePage() {
   return (
     <section className="">
-      <div className="text-5xl mb-10">
-        <p className="mb-8">
-          Hey<span className={`wave mx-4`}> 👋 </span>I&apos;m Nafi!
+      <div className="mb-10 text-2xl bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-100 via-slate-300 to-slate-400 bg-clip-text text-transparent">
+        <p className="mb-8 text-5xl text-zinc-300">
+          Hey<span className={`wave mx-4`}> 👋 </span>
         </p>
+        I&apos;m Nafi Asib!
         <p>Software Engineer from Dhaka, Bangladesh</p>
       </div>
-      <div className="mb-10 text-3xl">
-        <p>Currently working remotely as an Associate Software Developer</p>
+
+      <div className="mb-5  text-2xl bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-100 via-slate-300 to-slate-400 bg-clip-text text-transparent">
+        <p>This an experimental digital garden where I share my learnings!</p>
       </div>
-      <div className="mb-5 text-xl">
-        <p>
-          Here I dump my (un-organized 🥲) notes while learning something fun!
-        </p>
-      </div>
-      <Link href="/posts" className="flex text-2xl">
-        View all my notes <ArrowRight />
-      </Link>
+      <PostList />
     </section>
   );
 }

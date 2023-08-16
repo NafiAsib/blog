@@ -32,7 +32,7 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} antialiased font-sans bg-gradient-to-r from-gray-700 to-gray-800 max-w-4xl mx-auto mt-20`}
       >
-        <main className="">{children}</main>
+        <main className="max-w-2xl px-4 sm:px-16 mx-auto">{children}</main>
         <TailwindIndicator />
       </body>
     </html>

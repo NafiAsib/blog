@@ -1,7 +1,8 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { getMDXComponent } from "next-contentlayer/hooks";
 import { format, parseISO } from "date-fns";
 import { allPosts } from "contentlayer/generated";
-import type { Metadata } from "next";
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -22,6 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const PostLayout = ({ params }) => {
   const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
   if (!post) throw new Error(`Cannot find post with slug ${params.slug}`);
+  const MDXContent = getMDXComponent(post.body.code);
   return (
     <article className="mx-auto max-w-2xl">
       <div className="mb-6 text-center">
@@ -37,10 +39,11 @@ const PostLayout = ({ params }) => {
           {format(parseISO(post.date), "LLLL d, yyyy")}
         </time>
       </div>
-      <div
+      <MDXContent />
+      {/* <div
         className="cl-post-body"
         dangerouslySetInnerHTML={{ __html: post.body.html }}
-      />
+      /> */}
     </article>
   );
 };
