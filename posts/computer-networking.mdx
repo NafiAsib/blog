@@ -1,23 +1,74 @@
 ---
-title: Just enough networking for DevOps beginner
-date: 2023-04-25
-description: dkjlkfjlj
+title: Just enough networking for beginners
+publishedAt: 2023-04-25
+description: Bare minimum networking knowledge to start
+tags: [network]
 ---
 
-Testing out
+Networking forms the backbone of modern IT infrastructures. Grasping the essentials of networking will empower one to manage and deploy systems a bit more effectively. Let's dive into the fundamental concepts with easy-to-understand explanations and relatable examples.
 
-```js showLineNumbers title="multiply.js" {3}
-import { Module } from "@nestjs/common";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
-import { UsersModule } from "./users/users.module";
-import { ConfigModule } from "@nestjs/config";
-import { TypeOrmModule } from "@nestjs/typeorm";
-```
+### 1. **IP Addresses and Subnetting**
 
-dkjfskldf
+**IP Addresses:** Imagine IP addresses as the "home addresses" of devices in a network. They're like phone numbers that computers use to identify and communicate with each other. There are two versions: IPv4 (e.g., 192.168.1.1) and IPv6 (e.g., 2001:0db8:85a3:0000:0000:8a2e:0370:7334).
 
-```js /age/#v /name/#v /setAge/#s /setName/#s /50/#i /'Taylor'/#i
-const [age, setAge] = useState(50);
-const [name, setName] = useState("Taylor");
-```
+**Subnetting:** Think of a network as a city and subnets as neighborhoods. Subnetting involves dividing the city into smaller neighborhoods to make management easier. For example, in the IP address 192.168.1.1/24, the "/24" signifies that the first 24 bits are dedicated to the network, leaving 8 bits for addressing hosts within that network.
+
+### 2. **Networking Devices**
+
+#### a. **Router**
+
+A router is like a postal sorting center that directs mail to its final destination.
+
+In networking, a router connects different networks, like your home network and the internet. It uses IP addresses to decide where to send data. For instance, if you request a webpage, the router ensures the response reaches your device.
+
+#### b. **Switch**
+
+A switch act like a local distribution center that delivers packages within a neighborhood.
+
+Switches operate within a single network and use MAC addresses (like physical addresses for devices) to send data where it's needed. When you send a file to another device in the same network, the switch ensures it goes to the right recipient.
+
+#### c. **Firewall**
+
+A firewall is your security guard, allowing only authorized visitors into your home.
+
+Firewalls protect your network by filtering traffic based on rules you set. For example, you can block certain websites or only allow secure connections. It's like customizing who can access your Wi-Fi network.
+
+### 3. **Ports and Protocols**
+
+Think of ports as doors to different services on a device.
+
+Imagine you're in a hotel with room service. Each room (service) has a different number (port) for orders. Port 80 is like the hotel's restaurant (HTTP), while port 443 is the secure version (HTTPS).
+
+**Protocols:** Protocols are like languages that devices use to talk to each other.
+
+When you browse a website, your browser (HTTP client) and the web server communicate using the HTTP protocol. For secure communication, they might use HTTPS (HTTP + encryption).
+
+### 4. **DNS (Domain Name System)**
+
+DNS is like a phonebook for the internet.
+
+Instead of remembering IP addresses, we use domain names (e.g., google.com). DNS translates these names into IP addresses. It's like searching for a friend's number in your phonebook.
+
+### 5. **Load Balancing**
+
+Think of load balancers as traffic cops directing cars to the least crowded road.
+
+When lots of users visit a website, load balancers distribute the traffic among multiple servers. This ensures no single server gets overwhelmed and provides a smoother experience for users.
+
+### 6. **Security Practices**
+
+**Firewalls:** Setting up a firewall is like locking your doors at night to prevent unauthorized entry.
+
+**Encryption:** Encryption is like putting your message in a locked box before sending it.
+
+**Access Control Lists (ACLs):** ACLs are like bouncers at a party, checking invitations before letting guests in.
+
+**IDS/IPS:** Intrusion Detection/Prevention Systems are like security cameras that alert you if something suspicious happens.
+
+### 7. **Monitoring and Troubleshooting**
+
+**Ping:** Think of "ping" as shouting, "Are you there?" to a friend across the street. If they respond, you know they're reachable.
+
+**Traceroute:** Traceroute is like tracking a package's journey with each stop it makes.
+
+**Wireshark:** Imagine Wireshark as a magic glass that lets you see all the messages flying around on your network.
