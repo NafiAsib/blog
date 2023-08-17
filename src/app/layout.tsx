@@ -29,6 +29,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/nord.min.css"
+        />
+      </head>
       <body
         className={`${poppins.variable} antialiased font-sans bg-gradient-to-r from-gray-700 to-gray-800 max-w-4xl mx-auto mt-20`}
       >
