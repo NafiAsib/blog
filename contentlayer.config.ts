@@ -14,7 +14,7 @@ export const Post = defineDocumentType(() => ({
       description: "The title of the post",
       required: true,
     },
-    date: {
+    publishedAt: {
       type: "date",
       description: "The date of the post",
       required: true,
@@ -34,9 +34,9 @@ export const Post = defineDocumentType(() => ({
     },
   },
   computedFields: {
-    url: {
+    slug: {
       type: "string",
-      resolve: (post) => `/posts/${post._raw.flattenedPath}`,
+      resolve: (doc) => doc._raw.flattenedPath,
     },
   },
 }));
