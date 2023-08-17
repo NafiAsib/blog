@@ -1,3 +1,4 @@
+import type { PropsWithChildren } from "react";
 import { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { TailwindIndicator } from "@/components/TailwindIndicator";
@@ -10,7 +11,10 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Nafi Asib | Blog",
+  title: {
+    default: "Nafi Asib",
+    template: "%s | Nafi Asib",
+  },
   description: "Blog of Nafi Asib",
   authors: [{ name: "K. M. Nafi Asib", url: "https://nafiasib.com" }],
   keywords: [
@@ -22,11 +26,7 @@ export const metadata: Metadata = {
   ],
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <head>
@@ -36,7 +36,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${poppins.variable} antialiased font-sans bg-gradient-to-r from-gray-700 to-gray-800 max-w-4xl mx-auto mt-20`}
+        className={`${poppins.variable} antialiased font-sans bg-gradient-to-r from-gray-700 to-gray-800 max-w-4xl mx-auto mt-20 mb-40`}
       >
         <main className="max-w-2xl px-4 sm:px-16 mx-auto">{children}</main>
         <TailwindIndicator />
