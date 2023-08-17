@@ -27,7 +27,7 @@ const PostLayout = ({ params }) => {
   const MDXContent = getMDXComponent(post.body.code);
   return (
     <AnimatePage>
-      <article className="mx-auto max-w-2xl">
+      <article className="mx-auto max-w-2xl prose">
         <div className="mb-6 text-center">
           <Link href="/posts">
             <span className="text-center text-sm font-bold uppercase text-slate-100">
