@@ -1,0 +1,28 @@
+---
+title: Next.js 13 with Contentlayer & TailwindCSS
+publishedAt: 2023-04-26
+description: Guide to setup a blog with Next.js 13 (App Router), TypeScript, Contentlayer & TailwindCSS
+tags: [nextjs]
+---
+
+### Installation
+
+- [Create a Next.js app](https://nextjs.org/docs/pages/api-reference/create-next-app)
+
+```bash
+pnpm create next-app
+```
+
+- Install `contentlayer`
+
+```bash
+pnpm install next-contentlayer
+```
+
+- Then wrap your next configuration object in the withContentlayer utility
+
+```jsx
+// next.config.js
+import { withContentlayer } from "next-contentlayer";
+export default withContentlayer({});
+```
