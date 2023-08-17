@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        text: "rgb(var(--color-text) / <alpha-value>)",
+      },
       fontFamily: {
         sans: ["var(--font-poppins)"],
       },

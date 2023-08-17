@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    /* For rgb(255 115 179 / <alpha-value>) */
+    --color-text: 255 255 255;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      /* For rgb(255 115 179 / <alpha-value>) */
+      --color-text: 255 255 255;
+    }
+  }
+}
+
 /* source: https://jarv.is/notes/css-waving-hand-emoji/ */
 .wave {
   animation-name: wave-animation;
