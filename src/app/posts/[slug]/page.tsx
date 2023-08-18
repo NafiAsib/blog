@@ -4,6 +4,7 @@ import { getMDXComponent } from "next-contentlayer/hooks";
 import { format, parseISO } from "date-fns";
 import { allPosts } from "contentlayer/generated";
 import { AnimatePage } from "@/components/atoms/AnimatePage";
+import WIP from "@/components/WIP";
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -60,6 +61,10 @@ function formatDate(date: string) {
   return `${fullDate} (${formattedDate})`;
 }
 
+const components = {
+  WIP,
+};
+
 const PostLayout = ({ params }) => {
   const post = allPosts.find((post) => post.slug === params.slug);
   if (!post) throw new Error(`Cannot find post with slug ${params.slug}`);
@@ -81,7 +86,7 @@ const PostLayout = ({ params }) => {
             {/* {format(parseISO(post.publishedAt), "LLLL d, yyyy")} */}
           </time>
         </div>
-        <MDXContent />
+        <MDXContent components={{ ...components }} />
       </article>
     </AnimatePage>
   );
