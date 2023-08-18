@@ -17,18 +17,138 @@ There are many benefits for incorporating feature toggles into your release proc
 - Hotfixes and Rollbacks: Quickly enable or disable features in production to respond to issues or unexpected behavior.
 - Configuration Management: Adjust settings and configurations in real-time without redeploying your application.
 
-### GrowthBook vs. Flipt
-
 Feature flags can be implemented manually using code, but to streamline the process and access advanced features, many development teams turn to enterprise software. Two popular options in this realm are [GrowthBook](https://www.growthbook.io/) and [Flipt](https://www.flipt.io/). Both tools are open-source and offer self-hosted solutions with premium features.
 
-Setting up GrowthBook and Flipt is remarkably similar, and both tools offer a seamless process through Docker. By spinning up a Docker instance, you gain immediate access to their user-friendly dashboards. Within these dashboards, you can effortlessly create feature flags that can be toggled based on specific conditions.
+### Pre-requisites
 
-Both GrowthBook and Flipt offers SDK support for major programming languages. The process of setting up these SDKs is straightforward and similar for both tools. Simply install the SDK of your choice and modify your source code accordingly to incorporate feature flags effortlessly.
+We'll be working with a demo app. The github link of the demo app is [Quotes](https://github.com/NafiAsib/quotes). First clone the repository
 
-While GrowthBook's SDK offers a mature and polished experience, it's worth noting that Flipt's Official Node.js SDK is still in beta, and there have been some reported issues. As a result, some developers may find GrowthBook's SDK to be a more reliable and developer-friendly option at this stage.
+```bash
+git clone git@github.com:NafiAsib/quotes.git
+```
 
-GrowthBook excels in providing a wide array of features and exceptional control compared to Flipt. With GrowthBook, you can grant access to specific users based on custom attributes, allowing for more fine-tuned targeting. This level of granularity ensures that features reach the intended audience precisely. Moreover, GrowthBook supports custom environments, enabling you to create distinct environments for development, testing, staging, and production. This flexibility streamlines the management of feature flags across different stages of your software development lifecycle.
+Quotes is a generic two tier app with frontend and backend. Frontend is created with React and backend with Express. There are primary two features in the demo app.
+
+<Image
+  src={"/images/feature-flagging/initial-demo-app.png"}
+  alt="initial demo app"
+  height={500}
+  width={500}
+/>
+It can show Anime quotes and Programming quotes fetched from Express backend.
+<Image
+  src={"/images/feature-flagging/quote-loaded.png"}
+  alt="quote-loaded"
+  height={500}
+  width={500}
+/>
+
+We'll be implementing feature toggle to turn on and off these features.
+
+### GrowthBook
+
+GrowthBook has a clean and easy [documentation for self-hosting](https://docs.growthbook.io/self-host).
+
+```yml
+# docker-compose.yml
+version: "3"
+services:
+  mongo:
+    image: "mongo:4.4.18"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    platform: linux/amd64
+  growthbook:
+    image: "growthbook/growthbook:latest"
+    ports:
+      - "3000:3000"
+      - "3100:3100"
+    depends_on:
+      - mongo
+    environment:
+      - MONGODB_URI=mongodb://root:password@mongo:27017/growthbook?authSource=admin
+    volumes:
+      - uploads:/usr/local/src/app/packages/back-end/uploads
+    platform: linux/amd64
+volumes:
+  uploads:
+```
+
+<Alert type="warn">
+  mongo image version is changed to run on Apple Silicon
+</Alert>
+
+Now run `docker compose up -d` to start GrowthBook & visit http://localhost:3000
+
+<Alert type="warn">
+  Make sure none of frontend & backend is running on port 3000
+</Alert>
+
+On first launch you\'ll have to create account. GrowthBook will guide you to add SDK on the app. The instructions shown are pretty clear & straightforward. Simply do accordingly and you\'ll be up and running with feature flagging in few mins.
+
+### Flipt
+
+Flipt too has an excellent [documentation](https://www.flipt.io/docs/installation) that guides you through the process.
+
+```yml
+version: "3"
+services:
+  flipt:
+    image: flipt/flipt:latest
+    ports:
+      - "8080:8080"
+      - "9000:9000"
+    volumes:
+      - ./flipt:/var/opt/flipt
+    restart: always
+```
+
+You can pass flipt config file if needed in
+
+```yml
+version: "3"
+services:
+  flipt:
+    image: flipt/flipt:latest
+    ports:
+      - "8080:8080"
+      - "9000:9000"
+    volumes:
+      - ./flipt:/var/opt/flipt
+      - ./flipt/config.yaml:/etc/flipt/config.yaml
+    restart: always
+```
+
+<Alert type="warn">
+  If you encounter CORS error, you'll likely have to allow your origin in the
+  config.yml file
+</Alert>
+
+Install necessary SDK tools to get up and going.
+
+<Alert type="warn">Flipt Node SDK is still in beta.</Alert>
+
+### GrowthBook vs. Flipt
+
+##### Setup
+
+Setting up GrowthBook and Flipt is remarkably similar, and both tools offer a seamless process through Docker.
+
+##### SDK support
+
+Both GrowthBook and Flipt offers SDK support for major programming languages. The process of setting up these SDKs is straightforward and similar for both tools.
+
+While GrowthBook's SDK offers a mature and polished experience, it's worth noting that Flipt's Official Node.js SDK is still in beta. Some developers may find GrowthBook's SDK to be a more reliable and developer-friendly option at this stage.
+
+#### Features
+
+GrowthBook excels in providing a **wide array of features** and exceptional control compared to Flipt. With GrowthBook, you can grant access to specific users based on custom attributes, allowing for more fine-tuned targeting. This level of granularity ensures that features reach the intended audience precisely. Moreover, GrowthBook supports custom environments, enabling you to create distinct environments for development, testing, staging, and production. This flexibility streamlines the management of feature flags across different stages of your software development lifecycle.
+
+#### Devtools
 
 One of GrowthBook's standout features is its [Chrome extension](https://docs.growthbook.io/app/visual), which functions as a visual editor. This extension opens up the tool's capabilities to non-technical individuals, allowing them to easily manage feature flags without diving into code.
+
+### Conclusion
 
 Based on stability, feature set, and community support, GrowthBook offers superior value for most use cases. Its robust feature set, granular control, and extensive community support make it a reliable and feature-rich choice for teams looking to implement sophisticated feature flagging strategies. However, if simplicity and ease of use are your top priorities, Flipt could be an appealing option. It provides a more straightforward and user-friendly experience, making it ideal for teams seeking a quick and easy way to get started with feature flagging. Ultimately, the best choice will depend on your specific project requirements and the level of control and complexity you need in your feature flagging process.
