@@ -3,7 +3,7 @@ import PostList from "@/components/PostList";
 import { AnimatePage } from "@/components/atoms/AnimatePage";
 
 export const metadata: Metadata = {
-  title: "Posts | Nafi Asib",
+  title: "Posts",
 };
 
 export default function Posts() {
