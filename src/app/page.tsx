@@ -27,25 +27,27 @@ export default function HomePage() {
   return (
     <section className="">
       <motion.div
-        className="mb-10 text-2xl bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-100 via-slate-300 to-slate-400 bg-clip-text text-transparent"
         {...getAnimateProps({ shouldReduceMotion })}
+        className="mb-10 text-2xl bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-100 via-slate-300 to-slate-400 bg-clip-text text-transparent"
       >
-        <motion.p className="mb-8 text-5xl text-zinc-300">
+        <p className="mb-8 text-5xl text-zinc-300">
           Hey<span className={`wave mx-4`}> 👋 </span>
-        </motion.p>
+        </p>
         I&apos;m Nafi Asib!
         <p>Software Engineer from Dhaka, Bangladesh</p>
       </motion.div>
 
       <motion.div
         className="mb-5 text-xl bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-100 via-slate-300 to-slate-400 bg-clip-text text-transparent"
-        {...getAnimateProps({ shouldReduceMotion })}
+        {...getAnimateProps({ delay: 0.3, shouldReduceMotion })}
       >
-        <p>This an experimental digital garden where I share my learnings!</p>
+        <p>
+          This is an experimental digital garden where I share my learnings!
+        </p>
       </motion.div>
-      <AnimatePage>
+      <motion.div {...getAnimateProps({ delay: 0.5, shouldReduceMotion })}>
         <PostList />
-      </AnimatePage>
+      </motion.div>
     </section>
   );
 }
