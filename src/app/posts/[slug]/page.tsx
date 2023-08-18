@@ -5,6 +5,8 @@ import { format, parseISO } from "date-fns";
 import { allPosts } from "contentlayer/generated";
 import { AnimatePage } from "@/components/atoms/AnimatePage";
 import WIP from "@/components/WIP";
+import Image from "next/image";
+import Alert from "@/components/Alert";
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -61,8 +63,14 @@ function formatDate(date: string) {
   return `${fullDate} (${formattedDate})`;
 }
 
+function RoundedImage(props) {
+  return <Image alt={props.alt} className="rounded-lg" {...props} />;
+}
+
 const components = {
   WIP,
+  Alert,
+  Image: RoundedImage,
 };
 
 const PostLayout = ({ params }) => {
@@ -71,7 +79,7 @@ const PostLayout = ({ params }) => {
   const MDXContent = getMDXComponent(post.body.code);
   return (
     <AnimatePage>
-      <article className="prose prose-headings:text-text text-left text-[#D4D4D4] prose-a:text-neutral-50 prose-a:no-underline prose-strong:text-[#D4D4D4]">
+      <article className="prose prose-headings:text-text text-left text-[#D4D4D4] prose-a:text-neutral-50 prose-a:no-underline prose-strong:text-[#D4D4D4] prose-code:text-white/80">
         <div className="mb-6 text-center">
           <Link href="/posts">
             <span className="text-center text-sm font-bold uppercase text-slate-100">
