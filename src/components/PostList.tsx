@@ -1,18 +1,26 @@
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { compareDesc } from "date-fns";
 import { allPosts } from "contentlayer/generated";
 import PostPreview from "@/components/PostPreview";
-import Link from "next/link";
 
 export default function PostList() {
+  const pathname = usePathname();
+  console.log(pathname);
+
   return (
     <div className="flex flex-col gap-y-6">
-      <div className="mb-6 text-center">
-        <Link href="/">
-          <span className="text-center text-sm font-bold uppercase text-slate-100">
-            Back to home
-          </span>
-        </Link>
-      </div>
+      {pathname !== "/" ? (
+        <div className="mb-6 text-center">
+          <Link href="/">
+            <span className="text-center text-sm font-bold uppercase text-slate-100">
+              Back to home
+            </span>
+          </Link>
+        </div>
+      ) : null}
+
       {allPosts
         .sort((a, b) => {
           return compareDesc(new Date(a.publishedAt), new Date(b.publishedAt));
