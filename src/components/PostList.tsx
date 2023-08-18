@@ -7,7 +7,6 @@ import PostPreview from "@/components/PostPreview";
 
 export default function PostList() {
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <div className="flex flex-col gap-y-6">
