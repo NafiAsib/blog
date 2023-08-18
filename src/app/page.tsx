@@ -1,20 +1,51 @@
+"use client";
+import { motion, useReducedMotion } from "framer-motion";
 import PostList from "@/components/PostList";
+import { AnimatePage } from "@/components/atoms/AnimatePage";
 
-export default async function HomePage() {
+const initial = {
+  y: 10,
+  opacity: 0,
+};
+
+const animate = {
+  y: 0,
+  opacity: 1,
+};
+
+const getAnimateProps = ({ delay = 0, shouldReduceMotion }) => ({
+  initial: shouldReduceMotion ? false : initial,
+  animate,
+  transition: {
+    type: "spring",
+    delay,
+  },
+});
+
+export default function HomePage() {
+  const shouldReduceMotion = useReducedMotion();
   return (
     <section className="">
-      <div className="mb-10 text-2xl bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-100 via-slate-300 to-slate-400 bg-clip-text text-transparent">
-        <p className="mb-8 text-5xl text-zinc-300">
+      <motion.div
+        className="mb-10 text-2xl bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-100 via-slate-300 to-slate-400 bg-clip-text text-transparent"
+        {...getAnimateProps({ shouldReduceMotion })}
+      >
+        <motion.p className="mb-8 text-5xl text-zinc-300">
           Hey<span className={`wave mx-4`}> 👋 </span>
-        </p>
+        </motion.p>
         I&apos;m Nafi Asib!
         <p>Software Engineer from Dhaka, Bangladesh</p>
-      </div>
+      </motion.div>
 
-      <div className="mb-5 text-xl bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-100 via-slate-300 to-slate-400 bg-clip-text text-transparent">
+      <motion.div
+        className="mb-5 text-xl bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-100 via-slate-300 to-slate-400 bg-clip-text text-transparent"
+        {...getAnimateProps({ shouldReduceMotion })}
+      >
         <p>This an experimental digital garden where I share my learnings!</p>
-      </div>
-      <PostList />
+      </motion.div>
+      <AnimatePage>
+        <PostList />
+      </AnimatePage>
     </section>
   );
 }
