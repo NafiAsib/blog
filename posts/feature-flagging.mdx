@@ -19,32 +19,6 @@ There are many benefits for incorporating feature toggles into your release proc
 
 Feature flags can be implemented manually using code, but to streamline the process and access advanced features, many development teams turn to enterprise software. Two popular options in this realm are [GrowthBook](https://www.growthbook.io/) and [Flipt](https://www.flipt.io/). Both tools are open-source and offer self-hosted solutions with premium features.
 
-### Pre-requisites
-
-We'll be working with a demo app. The github link of the demo app is [Quotes](https://github.com/NafiAsib/quotes). First clone the repository
-
-```bash
-git clone git@github.com:NafiAsib/quotes.git
-```
-
-Quotes is a generic two tier app with frontend and backend. Frontend is created with React and backend with Express. There are primary two features in the demo app.
-
-<Image
-  src={"/images/feature-flagging/initial-demo-app.png"}
-  alt="initial demo app"
-  height={500}
-  width={500}
-/>
-It can show Anime quotes and Programming quotes fetched from Express backend.
-<Image
-  src={"/images/feature-flagging/quote-loaded.png"}
-  alt="quote-loaded"
-  height={500}
-  width={500}
-/>
-
-We'll be implementing feature toggle to turn on and off these features.
-
 ### GrowthBook
 
 GrowthBook has a clean and easy [documentation for self-hosting](https://docs.growthbook.io/self-host).
