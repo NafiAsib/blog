@@ -14,6 +14,11 @@ export const Post = defineDocumentType(() => ({
       description: "The title of the post",
       required: true,
     },
+    draft: {
+      type: "boolean",
+      description: "Sets whether the post is set to published or not",
+      required: false,
+    },
     publishedAt: {
       type: "date",
       description: "The date of the post",
