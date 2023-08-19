@@ -79,7 +79,7 @@ const PostLayout = ({ params }) => {
   const MDXContent = getMDXComponent(post.body.code);
   return (
     <AnimatePage>
-      <article className="prose prose-headings:text-text text-left text-[#D4D4D4] prose-a:text-neutral-50 prose-a:no-underline prose-strong:text-[#D4D4D4] prose-code:text-white/80">
+      <article className="prose prose-headings:text-text text-left text-[#D4D4D4] prose-a:text-neutral-50 prose-a:no-underline prose-strong:text-[#D4D4D4] prose-code:text-white/80 prose-blockquote:text-[#D4D4D4]">
         <div className="mb-6 text-center">
           <Link href="/posts">
             <span className="text-center text-sm font-bold uppercase text-slate-100">
