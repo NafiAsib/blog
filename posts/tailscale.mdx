@@ -1,0 +1,264 @@
+---
+title: "Tailscale but self-hosted"
+publishedAt: 2023-08-19
+description: "Self-hosted remote access for your home lab"
+tags: [devops]
+draft: true
+---
+
+<WIP />
+{/* Cloudflare tunnel -> Can watch everything that goes in and out of their tunnel */}
+
+Tailscale is a modern VPN built on top of [WireGuard](https://en.wikipedia.org/wiki/WireGuard) protocol. It works like an overlay network (layered on top of another network) between the computers of your networks - using [NAT traversal](https://tailscale.com/blog/how-nat-traversal-works/). You can read about how all this works in depth from the article - [How Tailscale works](https://tailscale.com/blog/how-tailscale-works/). Our agenda of this article is not to deep dive into how things work, rather how we can get going.
+
+So, we can say that Tailscale is a secure mesh vpn network. Mesh because every node in the network is connected to each other. It even works with firewall on by using a technique called [network hole punching](<https://en.wikipedia.org/wiki/Hole_punching_(networking)>). According to Wikipedia,
+
+> Hole punching (or sometimes punch-through) is a technique in computer networking for establishing a direct connection between two parties in which one or both are behind firewalls or behind routers that use network address translation (NAT). To punch a hole, each client connects to an unrestricted third-party server that temporarily stores external and internal address and port information for each client. The server then relays each client's information to the other, and using that information each client tries to establish direct connection; as a result of the connections using valid port numbers, restrictive firewalls or routers accept and forward the incoming packets on each side.
+
+Tailscale is much faster than typical vpn. By default it uses split DNS to only direct traffic to your local network if it matches one of the client.
+
+Everything in Tailscale is Open Source, except the GUI clients for proprietary OS (Windows and macOS/iOS), and the control server. Tailscale also provides a free tier & it is very generous.
+
+So, Tailscale client is open source but co-ordinaiton/control server is not. This server is responsible for device to join your network.
+
+This is where [headscale](https://github.com/juanfont/headscale) comes into the play. headscale is
+
+> An open source, self-hosted implementation of the Tailscale control server.
+
+According to headscale, their design goal is
+
+> Headscale aims to implement a self-hosted, open source alternative to the Tailscale control server. Headscale's goal is to provide self-hosters and hobbyists with an open-source server they can use for their projects and labs. It implements a narrow scope, a single Tailnet, suitable for a personal use, or a small open-source organisation.
+
+So, as now the introduction is clear. Let's jump into setting up headscale. I'll be setting up headscale in a VPS that already has a Public IP. If you don't happen to have any, fear not! You can use [Fly.io](https://fly.io/) to get a domain for free. Heres an excellent [youtube video](https://www.youtube.com/watch?v=rGJ5RvB_aBg) that shows up the whole process with Fly.
+
+I'll be using [Nginx](https://www.nginx.com/) as reverse proxy and [Let's Encrypt](https://letsencrypt.org/) to get free certificate. All of this will be set up with [docker compose](https://docs.docker.com/compose/)
+
+#### Pre-requisites
+
+##### Domain name
+
+I'll assume you have your own domain name setup that points to your machine's IP. We'll be setting up headscale on a subdoman. Create an `A` record in your DNS manager with `headscale.yourdomain.com` that points to your machine's IP address.
+
+<Alert type="warn">
+  If you are using Cloudflare to manage DNS settings, turn of `Proxy status` for
+  now. Otherwise, it'll interfere with certificate request.
+</Alert>
+
+##### Open ports
+
+- You need total three ports open. Port 80 & 443 on TCP & 3478 on UDP (needed for headscale websocket connection) from both your network (typically known as security list or group / ingress rule).
+- Allow traffic on these port from the machine itself. Typically your machine will have either ufw or Firewalld acting as the firewall. I'm giving the commands of ufw, please search for your specific firewalls commands
+
+```bash
+sudo ufw status # check if ufw is enable or not
+sudo ufw enable # enable ufw
+sudo ufw status numbered   # check which ports are open
+sudo ufw allow 80
+sudo ufw allow 443
+sudo ufw allow 3478/udp
+```
+
+##### Install Docker
+
+There are plenty resources on Docker. Please follow one that's appropriate for your OS. Here's a link to [install Docker on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04)
+
+<Alert type="warn">Make sure docker compose is installed too</Alert>
+
+##### Create a directory where we'll be doing all setup.
+
+Name anything you like. In rest of the article, I'll assume you're in that directory.
+
+#### Setup
+
+##### Getting a subdomain
+
+- Create a directory named `certbot` and two directory inside that `conf` & `www`
+- Create a directory named `nginx`. Create sub directory `conf` then create a file named `nginx.conf`. Also create a `Dockerfile` in the root `nginx` directory
+
+```
+FROM nginx:latest
+```
+
+- Create a `docker-compose.yml` in your root directory.
+
+So after all these you'll have file structure like below,
+
+```
+.
+├── certbot
+│   ├── conf
+│   └── www
+├── nginx
+│   ├──conf
+│   │  └── nginx.conf
+│   ├── Dockerfile
+├── docker-compose.yml
+```
+
+In your docker-compose.yml,
+
+```yaml
+version: "3"
+
+services:
+  nginx:
+    build:
+      context: ./nginx/
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
+
+  certbot:
+    image: certbot/certbot:arm64v8-latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
+```
+
+In nginx.conf,
+
+```
+server {
+	listen 80;
+	listen [::]:80;
+
+	server_name headscale.yourdomain.com www.headscale.yourdomain.com;
+	server_tokens off;
+
+	location /.well-known/acme-challenge/ {
+		root /var/www/certbot;
+	}
+}
+
+```
+
+Now, run the docker compose file
+
+```bash
+docker compose up -d
+```
+
+After all services spins successfully, we then request for the certificate
+
+```bash
+docker compose run --rm certbot certonly --webroot -w /var/www/certbot --force-renewal --email yourmail@mail.com -d headscale.yourdomain.com --agree-tos
+```
+
+Certbot will request for a certificate and if it succeeds, we are done with this step.
+
+##### Headscale
+
+- Create a folder named `headscale`. Crate two sub-direcotory `config`, `keys`. Create a `config.yaml` & `db.sqlite` file inside `config`
+
+```
+.
+├── certbot
+│   ├── conf
+│   └── www
+├── nginx
+│   ├──conf
+│   │  └── nginx.conf
+│   ├── Dockerfile
+├── headscale
+│   ├──config
+│   │  └── config.yaml
+│   │  └── db.sqlite
+│   ├── keys
+├── docker-compose.yml
+```
+
+Copy [this files](https://github.com/juanfont/headscale/blob/main/config-example.yaml) content & paste in config.yaml,
+
+```yaml
+server_url: https://headscale.yourdomain.com
+listen_addr: 0.0.0.0:8080
+```
+
+On change these lines to accept request from all ips.
+
+Update your docker-compose.yaml
+
+```yaml
+version: "3"
+
+services:
+  nginx:
+    build:
+      context: ./nginx/
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
+
+  certbot:
+    image: certbot/certbot:arm64v8-latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
+
+  headscale:
+    container_name: headscale
+    volumes:
+      - ./headscale/config:/etc/headscale/
+      - ./headscale/keys:/var/lib/headscale/
+    ports:
+      - 8081:8080
+      - 9090:9090
+    image: headscale/headscale:latest
+    command: headscale serve
+    restart: unless-stopped
+```
+
+nginx.conf
+
+```
+map $http_upgrade $connection_upgrade {
+	default keep-alive;
+	'websocket' upgrade;
+	'' close;
+}
+
+server {
+	listen 80;
+	listen [::]:80;
+
+	server_name headscale.yourdomain.com www.headscale.yourdomain.com;
+	server_tokens off;
+
+	location /.well-known/acme-challenge/ {
+		root /var/www/certbot;
+	}
+}
+
+server {
+	listen 443 ssl http2;
+	listen [::]:443 ssl http2;
+
+	server_name headscale.nafiasib.com;
+	ssl_certificate /etc/nginx/ssl/live/headscale.nafiasib.com/fullchain.pem;
+	ssl_certificate_key /etc/nginx/ssl/live/headscale.nafiasib.com/privkey.pem;
+
+	location / {
+		proxy_pass http://headscale:8081;
+		proxy_http_version 1.1;
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header Connection $connection_upgrade;
+		proxy_set_header Host $server_name;
+		# proxy_redirect http:// https://;
+		proxy_buffering off;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+		add_header Strict-Transport-Security "max-age=15552000; includeSubDomains" always;
+	}
+}
+```
+
+Now stop and run docker compose again
