@@ -30,7 +30,8 @@ export async function GET(req: NextRequest) {
             backgroundImage:
               "linear-gradient(to right, rgb(255, 228, 230), rgb(204, 251, 241))",
             backgroundClip: "text",
-            "-webkit-background-clip": "text",
+            WebkitBackgroundClip: "text",
+
             color: "transparent",
             letterSpacing: "-0.05em",
             fontStyle: "normal",
@@ -45,7 +46,7 @@ export async function GET(req: NextRequest) {
             backgroundImage:
               "linear-gradient(to right, rgb(199, 210, 254), rgb(254, 202, 202), rgb(254, 249, 195))",
             backgroundClip: "text",
-            "-webkit-background-clip": "text",
+            WebkitBackgroundClip: "text",
             color: "transparent",
             letterSpacing: "-0.05em",
             fontStyle: "normal",
@@ -58,7 +59,6 @@ export async function GET(req: NextRequest) {
         </div>
       </div>
     ),
-
     {
       width: 1920,
       height: 1080,
