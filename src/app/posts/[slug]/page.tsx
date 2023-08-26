@@ -26,11 +26,29 @@ export async function generateMetadata({
   if (!post) {
     return;
   }
-  const { title, publishedAt, description } = post;
+  const { title, publishedAt: publishedTime, description, slug } = post;
 
   return {
     title,
     description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      publishedTime,
+      url: `https://blog.nafiasib.com/posts/${slug}`,
+      images: [
+        {
+          url: `https://blog.nafiasib.com/og?title=${title}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [`https://blog.nafiasib.com/og?title=${title}`],
+    },
   };
 }
 
