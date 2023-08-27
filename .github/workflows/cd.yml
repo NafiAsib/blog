@@ -9,7 +9,11 @@ jobs:
   push_to_hub:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
+
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
@@ -22,9 +26,20 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Restore cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            /root/.cache
+          key: ${{ runner.os }}-build-${{ hashFiles('**/Dockerfile') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           push: true
           platforms: arm64
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/next-blog:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
