@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ImageResponse } from "next/server";
 import { NextRequest } from "next/server";
 
@@ -14,12 +15,10 @@ export async function GET(req: NextRequest) {
           display: "flex",
           height: "100%",
           width: "100%",
-          alignItems: "center",
           justifyContent: "center",
           flexDirection: "column",
-          backgroundImage:
-            "linear-gradient(to right, rgb(229, 231, 235), rgb(156, 163, 175), rgb(75, 85, 99))",
-          fontSize: 60,
+          backgroundImage: "url(http://localhost:3000/og-bg.png)",
+          fontSize: 130,
           letterSpacing: -2,
           fontWeight: 700,
           textAlign: "center",
@@ -37,25 +36,45 @@ export async function GET(req: NextRequest) {
             fontStyle: "normal",
             lineHeight: "120px",
             whiteSpace: "pre-wrap",
+            textAlign: "right",
+            marginLeft: 190,
+            marginRight: 190,
           }}
         >
           {postTitle}
         </div>
         <div
           style={{
-            backgroundImage:
-              "linear-gradient(to right, rgb(199, 210, 254), rgb(254, 202, 202), rgb(254, 249, 195))",
-            backgroundClip: "text",
-            WebkitBackgroundClip: "text",
-            color: "transparent",
+            // backgroundImage:
+            // "linear-gradient(to right, rgb(199, 210, 254), rgb(254, 202, 202), rgb(254, 249, 195))",
+            // backgroundClip: "text",
+            // WebkitBackgroundClip: "text",
+            color: "white",
             letterSpacing: "-0.05em",
             fontStyle: "normal",
-            lineHeight: "120px",
             whiteSpace: "pre-wrap",
-            fontSize: "40",
+            fontSize: 50,
+            marginLeft: 190,
+            marginRight: 190,
+            display: "flex",
+            marginTop: 80,
+            alignContent: "center",
           }}
         >
-          Nafi Asib
+          <img
+            src="http://localhost:3000/avatar-rounded.png"
+            height={150}
+            width={150}
+            alt="rounded avatar"
+          />
+          <span
+            style={{
+              marginLeft: 40,
+              marginTop: 35,
+            }}
+          >
+            Nafi Asib
+          </span>
         </div>
       </div>
     ),
