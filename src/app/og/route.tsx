@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
           width: "100%",
           justifyContent: "center",
           flexDirection: "column",
-          backgroundImage: "url(http://localhost:3000/og-bg.png)",
+          backgroundImage: "url(https://blog.nafiasib.com/og-bg.png)",
           fontSize: 130,
           letterSpacing: -2,
           fontWeight: 700,
@@ -62,7 +62,7 @@ export async function GET(req: NextRequest) {
           }}
         >
           <img
-            src="http://localhost:3000/avatar-rounded.png"
+            src="https://blog.nafiasib.com/avatar-rounded.png"
             height={150}
             width={150}
             alt="rounded avatar"
