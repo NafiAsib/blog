@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Image from "next/image";
 import { getMDXComponent } from "next-contentlayer/hooks";
-import { format, parseISO } from "date-fns";
 import { allPosts } from "contentlayer/generated";
 import { AnimatePage } from "@/components/atoms/AnimatePage";
 import WIP from "@/components/WIP";
-import Image from "next/image";
 import Alert from "@/components/Alert";
+import Header from "@/components/Header";
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -97,19 +96,12 @@ const PostLayout = ({ params }) => {
   const MDXContent = getMDXComponent(post.body.code);
   return (
     <AnimatePage>
+      <Header />
       <section className="prose prose-headings:text-text text-left text-[#D4D4D4] prose-a:text-neutral-50 prose-a:no-underline prose-strong:text-[#D4D4D4] prose-code:text-white/80 prose-blockquote:text-[#D4D4D4]">
-        <div className="mb-6 text-center">
-          <Link href="/posts">
-            <span className="text-center text-sm font-bold uppercase text-slate-100">
-              Back to all notes
-            </span>
-          </Link>
-        </div>
         <div className="mb-6 text-center">
           <h1 className="mb-1 text-2xl font-bold">{post.title}</h1>
           <time dateTime={post.publishedAt} className="text-sm text-slate-400">
             {formatDate(post.publishedAt)}
-            {/* {format(parseISO(post.publishedAt), "LLLL d, yyyy")} */}
           </time>
         </div>
         <MDXContent components={{ ...components }} />
