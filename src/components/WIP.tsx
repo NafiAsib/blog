@@ -19,7 +19,7 @@ export default function WIP() {
           />
         </svg>
       </span>
-      <p>This article is an work in progress!</p>
+      <span>This article is still being worked on!</span>
     </div>
   );
 }
