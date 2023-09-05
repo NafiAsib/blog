@@ -2,6 +2,7 @@ import type { PropsWithChildren } from "react";
 import { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { TailwindIndicator } from "@/components/TailwindIndicator";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -36,15 +37,11 @@ export default function RootLayout({ children }: PropsWithChildren) {
         />
       </head>
       <body
-        className={`${poppins.variable} antialiased font-sans bg-gradient-to-r from-gray-700 to-gray-800 max-w-4xl mx-auto mt-20 mb-40`}
+        className={`${poppins.variable} max-w-2xl antialiased font-sans bg-gradient-to-r from-gray-700 to-gray-800 mx-auto mt-20 mb-40 px-4 sm:px-16`}
       >
-        <main
-          suppressHydrationWarning
-          className="max-w-2xl px-4 sm:px-16 mx-auto"
-        >
-          {children}
-        </main>
+        <main>{children}</main>
         <TailwindIndicator />
+        <Footer />
       </body>
     </html>
   );
