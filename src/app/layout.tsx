@@ -1,9 +1,10 @@
 import type { PropsWithChildren } from "react";
 import { Metadata } from "next";
 import { Poppins } from "next/font/google";
+
 import { TailwindIndicator } from "@/components/TailwindIndicator";
 import Footer from "@/components/Footer";
-import "./globals.css";
+import "@/styles/globals.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -30,12 +31,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
-      <head>
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/nord.min.css"
-        />
-      </head>
       <body
         className={`${poppins.variable} max-w-2xl antialiased font-sans bg-gradient-to-r from-gray-700 to-gray-800 mx-auto mt-20 mb-40 px-4 sm:px-16`}
       >
