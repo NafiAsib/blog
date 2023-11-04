@@ -3,7 +3,6 @@ title: "Tailscale but self-hosted"
 publishedAt: 2023-08-19
 description: "Self-hosted remote access for your home lab"
 tags: [devops]
-draft: true
 ---
 
 <WIP />
@@ -80,7 +79,7 @@ Name anything you like. In rest of the article, I'll assume you're in that direc
 - Create a directory named `certbot` and two directory inside that `conf` & `www`
 - Create a directory named `nginx`. Create sub directory `conf` then create a file named `nginx.conf`. Also create a `Dockerfile` in the root `nginx` directory
 
-```
+```Dockerfile
 FROM nginx:latest
 ```
 
@@ -88,7 +87,7 @@ FROM nginx:latest
 
 So after all these you'll have file structure like below,
 
-```
+```bash
 .
 ├── certbot
 │   ├── conf
@@ -100,9 +99,7 @@ So after all these you'll have file structure like below,
 ├── docker-compose.yml
 ```
 
-In your docker-compose.yml,
-
-```yaml
+```yaml title="docker-compose.yml" showLineNumbers {12-19} caption="line 12-19 is needed if you want to generate a self signed certificate"
 version: "3"
 
 services:
@@ -124,9 +121,7 @@ services:
       - ./certbot/conf/:/etc/letsencrypt/:rw
 ```
 
-In nginx.conf,
-
-```
+```nginx title="nginx.conf"
 server {
 	listen 80;
 	listen [::]:80;
@@ -157,9 +152,9 @@ Certbot will request for a certificate and if it succeeds, we are done with this
 
 ##### Headscale
 
-- Create a folder named `headscale`. Crate two sub-direcotory `config`, `keys`. Create a `config.yaml` & `db.sqlite` file inside `config`
+- Create a folder named `headscale`. Create two sub-direcotory `config`, `keys`. Create a `config.yaml` & `db.sqlite` file inside `config`
 
-```
+```bash
 .
 ├── certbot
 │   ├── conf
@@ -178,7 +173,7 @@ Certbot will request for a certificate and if it succeeds, we are done with this
 
 Copy [the content of this file](https://github.com/juanfont/headscale/blob/main/config-example.yaml) & paste in the config.yaml,
 
-```yaml
+```yaml title="config.yml"
 server_url: https://headscale.yourdomain.com
 listen_addr: 0.0.0.0:8080
 ```
@@ -187,7 +182,7 @@ Make sure to change these lines in the `config.yaml` to accept request from all 
 
 Update your docker-compose.yaml
 
-```yaml
+```yaml title="docker-compose.yml" {21-31} showLineNumbers
 version: "3"
 
 services:
@@ -221,9 +216,7 @@ services:
     restart: unless-stopped
 ```
 
-nginx.conf
-
-```
+```nginx title="nginx.conf"
 map $http_upgrade $connection_upgrade {
 	default keep-alive;
 	'websocket' upgrade;
@@ -267,6 +260,11 @@ server {
 ```
 
 Now stop and run docker compose again.
+
+```bash
+docker compose down
+docker compose up -d
+```
 
 Now we'll need to create accounts to add devices on the network. Let's add a mobile device first.
 
@@ -317,7 +315,7 @@ headscale user create tailscale
 headscale --user tailscale preauthkeys create --expiration 1h
 ```
 
-```yaml
+```yaml title="docker-compose.yml" {44-48} showLineNumbers
 version: "3"
 
 services:
