@@ -21,6 +21,7 @@ export default function PostList() {
       ) : null}
 
       {allPosts
+        .filter((post) => post.draft !== true)
         .sort((a, b) => {
           return compareDesc(new Date(a.publishedAt), new Date(b.publishedAt));
         })
