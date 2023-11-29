@@ -1,5 +1,5 @@
 @tailwind base;
-@import "./syntax-highlighting.css";
+@import "./syntax-highlighting.css"; /* for some unknown reason, this has to be imported after @tailwind base */
 @tailwind components;
 @tailwind utilities;
 

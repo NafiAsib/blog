@@ -1,3 +1,4 @@
+/* CSS to highlight code syntax in mdx */
 div[data-rehype-pretty-code-fragment] {
   padding: 0.75rem 0;
 }
