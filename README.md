@@ -1,12 +1,12 @@
 # Blog of Nafi Asib
 
-This blog is created with [Next.js 13 (App Router)](https://nextjs.org/docs/app), [Contentlyar](https://contentlayer.dev/docs/environments/nextjs-dcf8e39e), TailwindCSS.
+This blog is created with [Next.js 13 (App Router)](https://nextjs.org/docs/app), [Contentlayar](https://contentlayer.dev/docs/environments/nextjs-dcf8e39e), TailwindCSS.
 
 All the blog posts are written in MDX.
 
-This project is hosted on an arm64 based VPS on `Oracle Cloud`. A [Github Action](https://github.com/features/actions) is triggered when code is pushed to `main`. This action builds and pushes a `Docker` image to `Dockerhub`. On the VPS, [Watchtower](https://github.com/containrrr/watchtower) checks and updates the local `Docker` images on a 30m interval.
+This project is hosted on an arm64 based VPS on `Oracle Cloud`. A [Github Action](https://github.com/features/actions) is triggered when code is pushed to `main`. This action builds and pushes a `Docker` image to `Dockerhub`. On the VPS, [Watchtower](https://github.com/containrrr/watchtower) checks and updates the local `Docker` images on a 30 minutes interval.
 
-## Run the project
+## Run the project locally
 
 Clone the project:
 
@@ -14,7 +14,7 @@ Clone the project:
 git@github.com:NafiAsib/blog.git
 ```
 
-Run the development server:
+- Run the development server:
 
 ```bash
 cd blog
