@@ -1,18 +1,14 @@
 import type { PropsWithChildren } from "react";
 import { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 
 import PHProvider from "@/providers/PHProvider";
 
 import { TailwindIndicator } from "@/components/TailwindIndicator";
 import Footer from "@/components/Footer";
 import "@/styles/globals.css";
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
-});
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://blog.nafiasib.com"),
@@ -59,7 +55,11 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html lang="en">
       <PHProvider>
         <body
-          className={`${poppins.variable} max-w-2xl antialiased font-sans bg-gradient-to-r from-gray-700 to-gray-800 mx-auto mt-20 mb-40 px-4 sm:px-16`}
+          className={cn(
+            "max-w-2xl antialiased font-sans bg-gradient-to-r from-gray-700 to-gray-800 mx-auto mt-20 mb-40 px-4 sm:px-16",
+            GeistSans.variable,
+            GeistMono.variable
+          )}
         >
           <main>{children}</main>
           <TailwindIndicator />

@@ -11,7 +11,8 @@ module.exports = {
         text: "rgb(var(--color-text) / <alpha-value>)",
       },
       fontFamily: {
-        sans: ["var(--font-poppins)"],
+        sans: ["var(--font-geist-sans)"],
+        mono: ["var(--font-geist-mono)"],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
