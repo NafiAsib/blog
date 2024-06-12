@@ -1,0 +1,32 @@
+---
+title: "Local LLM - 101"
+publishedAt: 2024-06-12
+description: "A guide to run LLM locally with Ollama & set up agents to streamline AI workflow"
+tags: ["ml", "ai", "llm", "docker", "ollama"]
+draft: false
+---
+<WIP />
+
+So, you want to run LLM locally & set yourself with some sort of agentic workflow. Maybe you know what you're doing, maybe you don't. I don't know either. This is a self note to myself, and maybe to you too.
+
+<video autoPlay loop muted>
+  <source src={`/videos/locallama.mp4`} type="video/mp4" />
+</video>
+
+When it comes to running LLM locally, first issue is hardware. LLMs require a lot of computational power. If you are using Apple Silicon, you'll be surprised to see it's performance (at least I was `¯\_(ツ)_/¯` ) Otherwise, you'll need a decent GPU to run any decent LLM.
+
+1. Check which model you can run on your system from [Can you run it? LLM version](https://huggingface.co/spaces/Vokturz/can-it-run-llm)
+
+Now that you've figured out that you can run LLM, it's time to set up some sort of backend. There are plenty of options available. Notably,
+
+- [Text generation web UI / oobabooga](https://github.com/oobabooga/text-generation-webui)
+- [Axolotl](https://github.com/OpenAccess-AI-Collective/axolotl) - Mostly used for fine-tuing
+- [LM Studio](https://lmstudio.ai/)
+
+2. We'll go with [Ollama](https://ollama.com/). You can either directly install it or run it through official [docker image](https://hub.docker.com/r/ollama/ollama)
+
+Now, you need to choose a model to run with ollama. Find out which model works good for your usecase. For coding, I found [DeepSeek-Coder](https://github.com/deepseek-ai/DeepSeek-Coder) pretty good. You can find the list of models in [Ollama library](https://ollama.com/library). Choose one that has appropirate parameter size to your system.
+
+You'll see that models have parameter size with quantization. 
+
+<WIP />
