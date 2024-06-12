@@ -21,7 +21,7 @@ export default function PostPreview({ post }: Props) {
         dateTime={post.publishedAt}
         className="block text-sm font-semibold text-slate-100"
       >
-        {format(parseISO(post.publishedAt), "MMMM d")}
+        {format(parseISO(post.publishedAt), "MMMM d, yyyy")}
       </time>
       <p className="mt-4 text-slate-300">{post.description}</p>
     </Link>
