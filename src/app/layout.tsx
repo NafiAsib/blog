@@ -15,12 +15,13 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://blog.nafiasib.com"),
   title: {
     default: "Nafi Asib",
     template: "%s | Nafi Asib",
   },
-  description: "Blog of Nafi Asib",
-  authors: [{ name: "K. M. Nafi Asib", url: "https://nafiasib.com" }],
+  description: "Blog of Nafi | Engineer | Explorer",
+  authors: [{ name: "K M Nafi Asib", url: "https://blog.nafiasib.com" }],
   keywords: [
     "Blog, Software Enginner",
     "React.js",
@@ -28,6 +29,29 @@ export const metadata: Metadata = {
     "Backend",
     "Frontend",
   ],
+  openGraph: {
+    title: "K M Nafi Asib",
+    description: "Blog of Nafi | Engineer | Explorer",
+    url: "https://blog.nafiasib.com",
+    siteName: "Nafi Asib",
+    locale: "en_US",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  twitter: {
+    title: "K M Nafi Asib",
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({ children }: PropsWithChildren) {
