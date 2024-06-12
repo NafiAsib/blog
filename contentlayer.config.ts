@@ -28,6 +28,11 @@ export const Post = defineDocumentType(() => ({
       description: "The date of the post",
       required: true,
     },
+    lastModified: {
+      type: "date",
+      description: "The date of the post was last modified",
+      required: false,
+    },
     description: {
       type: "string",
       description: "The description of the post",
