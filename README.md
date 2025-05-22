@@ -1,6 +1,6 @@
 # Blog of Nafi Asib
 
-This blog is created with [Next.js 13 (App Router)](https://nextjs.org/docs/app), [Contentlayar](https://contentlayer.dev/docs/environments/nextjs-dcf8e39e), TailwindCSS.
+This blog is created with [Next.js 13 (App Router)](https://nextjs.org/docs/app), [Contentlayer](https://contentlayer.dev/docs/environments/nextjs-dcf8e39e) & TailwindCSS.
 
 All the blog posts are written in MDX.
 
@@ -11,7 +11,7 @@ This project is hosted on an arm64 based VPS on `Oracle Cloud`. A [Github Action
 Clone the project:
 
 ```bash
-git@github.com:NafiAsib/blog.git
+git clone git@github.com:NafiAsib/blog.git
 ```
 
 - Run the development server:
