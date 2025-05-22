@@ -1,32 +1,147 @@
 ---
 title: "Local LLM - 101"
 publishedAt: 2024-06-12
-description: "A guide to run LLM locally with Ollama & set up agents to streamline AI workflow"
+description: "A guide to run LLM locally & set up agents to streamline AI workflow"
 tags: ["ml", "ai", "llm", "docker", "ollama"]
 draft: false
 ---
 <WIP />
 
-So, you want to run LLM locally & set yourself with some sort of agentic workflow. Maybe you know what you're doing, maybe you don't. I don't know either. This is a self note to myself, and maybe to you too.
+So, you want to run LLM locally & set yourself with some sort of agentic workflow. The whole local LLM scene is quite overwhelming. You can run both text & vision model locally pretty good these days. This is a self note to myself & maybe to you too.
 
 <video autoPlay loop muted>
   <source src={`/videos/locallama.mp4`} type="video/mp4" />
 </video>
 
-When it comes to running LLM locally, first issue is hardware. LLMs require a lot of computational power. If you are using Apple Silicon, you'll be surprised to see it's performance (at least I was `¯\_(ツ)_/¯` ) Otherwise, you'll need a decent GPU to run any decent LLM.
+When it comes to running LLM locally, the first issue is hardware. LLMs require a lot of computational power. If you are using Apple Silicon, you'll be surprised to see it's performance (at least I was `¯\_(ツ)_/¯` )
 
-1. Check which model you can run on your system from [Can you run it? LLM version](https://huggingface.co/spaces/Vokturz/can-it-run-llm)
+Typically LLMs require a lot of storage, memory & compute powers (lots of $$).
 
-Now that you've figured out that you can run LLM, it's time to set up some sort of backend. There are plenty of options available. Notably,
+LLMs are huge collection of numbers, billions of them. These numbers need to be stored with incredibile precision.  Normally AI models use 32 bit or 4 bytes precision. Now, if we do a quick math for a LLM with 7 billion parameter, we'll get 
 
+`7B × 4 bytes = 28 GB` !
+
+This is where quantization steps in. 
+
+LLM quantization **reduces the precision** of model weights from 32-bit floating point to lower bit formats (8-bit, 4-bit, or even lower). 
+
+Wait! If quantization reduces the precision, shouldn't it affect the model quality??!
+
+Not necessarily! Modern quantization techniques are surprisingly effective at preserving model quality while drastically reducing size.
+
+Quantization works by mapping the original high-precision values to a smaller set of representative values. Quantization doesn't randomly reduce precision. It carefully analyzes which weights are most important & preserves their values more accurately.
+
+This process:
+- Significantly reduces model size
+- Decreases memory requirements during inference
+- Speeds up inference time
+- Enables deployment on resource-constrained devices
+
+Now for the same 7 billion LLM with 8-bit or 2 bytes precision, well get 
+
+`7B × 2 = 7 GB` !!
+
+A whopping **75%** reduction in size.
+
+![quantization-demo](https://cdn.prod.website-files.com/64128071fa22275256c1c222/65d50e29017f87c23acf49b1_Quantization-p-1600.png)
+
+You can read further on [how does quantization affect model output?](https://rentry.org/quants)
+
+Now, we need to talk about LLM formats. There's a lot of model formats. Some of them are briefly
+
+**GGUF**
+
+- What it is: Container format for quantized models optimized for CPU/consumer hardware
+- Used by: llama.cpp, Ollama, LM Studio
+- Key benefit: Efficient memory usage with various quantization levels (q2, q4, q8)
+
+**GPTQ**
+
+- What it is: Post-training quantization method using calibration data
+- Used by: AutoGPTQ, ExLlama, Hugging Face
+- Key benefit: Better quality preservation at 4-bit & 3-bit precision
+
+**AWQ (Activation-aware Weight Quantization)**
+
+- What it is: Preserves important weights based on activation values
+- Used by: vLLM, Hugging Face
+- Key benefit: Better performance than GPTQ at 4-bit precision
+
+**SAFETENSORS**
+
+- What it is: Safe storage format for model weights (not quantized)
+- Used by: Hugging Face, most modern models
+- Key benefit: Secure, memory-mapped loading without execution risks
+
+Out of these formats, GGUF is our best buddy. It is widely used by tools like Ollama, llama.cpp, LM Studio etc.
+
+**GGUF (Georgi Gerganov Universal Format)** is a special file format designed for efficiently storing & running quantized LLMs on consumer hardware. Here's what you need to know:
+
+- GGUF packages everything needed to run an LLM into a single file (model, tokenizer, settings)
+- Enables running models with much less memory than original formats (thanks to quantization!)
+- Optimized for CPU & limited GPU systems like laptops
+
+If you search for GGUF models, you'll see some thing like `q4_k_m`
+
+First number (q2, q4, q5, q8): Bits per weight - lower means smaller file but potentially lower quality
+q8: 8-bit precision (largest, highest quality)
+q4: 4-bit precision (good balance)
+q2: 2-bit precision (smallest, lowest quality)
+
+Letter K indicates "K-quantization" that prioritizes important weights. To learn more you can read this [PR](https://github.com/ggml-org/llama.cpp/pull/1684#issue-1739619305)
+
+Size indicator (S, M, L):
+S (Small): Smallest file size, fastest, lowest quality
+M (Medium): Balanced approach (recommended for most users)
+L (Large): Larger file size, higher quality
+
+Example,
+
+A file named llama-3-8b.q4_k_m.gguf means:
+
+- 4-bit quantization with K-quantization method
+- Medium block size (balanced approach)
+- ~4× smaller than the original model with good quality preservation
+
+For most common applications, 4-bit quantized models (like Q4_K_M) provide a sweet spot - 87.5% smaller with only minimal quality reduction that most users won't notice in conversational use.
+
+The best source for LLM is [Huggingface](https://huggingface.co/models). There's a neat tool [HuggingFace Model Downloader](https://github.com/bodaay/HuggingFaceModelDownloader) that supports failed download resume & some cool perks.
+
+Now that we know about quantization & model format, let's download the software to run LLMs.
+
+ There are plenty of options available. Notably,
+
+- [llama.cpp](https://github.com/ggml-org/llama.cpp)
+- [Ollama](https://ollama.com/)
+- [koboldcpp](https://github.com/LostRuins/koboldcpp)
+- [vLLM](https://docs.vllm.ai/en/latest/)
 - [Text generation web UI / oobabooga](https://github.com/oobabooga/text-generation-webui)
-- [Axolotl](https://github.com/OpenAccess-AI-Collective/axolotl) - Mostly used for fine-tuing
+- [Axolotl](https://github.com/OpenAccess-AI-Collective/axolotl) - Mostly used for fine-tuning
 - [LM Studio](https://lmstudio.ai/)
 
-2. We'll go with [Ollama](https://ollama.com/). You can either directly install it or run it through official [docker image](https://hub.docker.com/r/ollama/ollama)
+and a lot more!
 
-Now, you need to choose a model to run with ollama. Find out which model works good for your usecase. For coding, I found [DeepSeek-Coder](https://github.com/deepseek-ai/DeepSeek-Coder) pretty good. You can find the list of models in [Ollama library](https://ollama.com/library). Choose one that has appropirate parameter size to your system.
+You can spend weeks just playing with different ways to run LLMs & frontend. I personally prefer `koboldcpp` to quickly test out GGUF models. It has a single binary that you just run & a web UI with a whole lot of functionalities. 
 
-You'll see that models have parameter size with quantization. 
+If I want to serve OpenAI compatible api endpoints, my choice is Ollama. Simply because it's easy to install on Linux, macOS & Windows. I happen to unfortunately use all of these OS.
+
+*Don't forget to `export OLLAMA_HOST=0.0.0.0` if you plan to serve api endpoints over the network!*
+
+Let's go with [Ollama](https://ollama.com/). You can either directly install it or run it through official [docker image](https://hub.docker.com/r/ollama/ollama)
+
+Now, you need to choose a model to run with ollama. Find out which model works good for your usecase. There's a [LLM leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard#/) that you can utilize. ~For coding, I found [DeepSeek-Coder](https://github.com/deepseek-ai/DeepSeek-Coder) pretty good.~ You can find the list of models in [Ollama library](https://ollama.com/library).
+
+You should figure out a *good enough* parameter number & quantization to run LLM on your system.
+
+[Here's a calculator](https://huggingface.co/spaces/NyxKrage/LLM-Model-VRAM-Calculator) to give you a rough idea.
+
+Now, you have ollama installed, a model of choice with parameter number & quantization.
+
+Let's pull this image from Ollama library. Careful, specify the parameter & quantization in Ollama command.
+
+**Resources**
+
+- [Quantization Techniques Demystified: Boosting Efficiency in Large Language Models (LLMs)](https://www.inferless.com/learn/quantization-techniques-demystified-boosting-efficiency-in-large-language-models-llms)
 
 <WIP />
+
