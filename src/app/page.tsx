@@ -1,6 +1,7 @@
 "use client";
 import { motion, useReducedMotion } from "framer-motion";
 import PostList from "@/components/PostList";
+import { TypeWriter } from "@/components/TypeWriter";
 
 const initial = {
   y: 10,
@@ -27,13 +28,16 @@ export default function HomePage() {
     <section className="">
       <motion.div
         {...getAnimateProps({ shouldReduceMotion })}
-        className="mb-10 text-2xl bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-100 via-slate-300 to-slate-400 bg-clip-text text-transparent"
+        className="flex flex-col gap-4 mb-10 text-2xl bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-100 via-slate-300 to-slate-400 bg-clip-text text-transparent"
       >
-        <p className="mb-8 text-5xl text-zinc-300">
-          Hey<span className={`wave mx-4`}> 👋 </span>
-        </p>
-        I&apos;m Nafi Asib!
-        <p className="text-xl">Hobbyist Maker. Product Engineer</p>
+        <div className="">
+          <p className="mb-8 text-5xl text-zinc-300">
+            Hey<span className={`wave mx-4`}> 👋 </span>
+          </p>
+          I&apos;m Nafi Asib!
+          {/* <p className="text-xl">Hobbyist Maker. Product Engineer</p> */}
+        </div>
+        <TypeWriter />
       </motion.div>
 
       <motion.div
