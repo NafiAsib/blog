@@ -11,15 +11,14 @@ export default function AnimatedBorderLink({ icon, label, href }: Props) {
   return (
     <Link
       href={href}
-      className="items-center flex gap-x-1 hover:text-white font-semibold text-white group relative overflow-hidden p-2 rounded"
+      className="items-center flex gap-x-2 text-slate-300 font-medium group relative px-3 py-1.5 rounded-lg
+      hover:text-white transition-all duration-500"
     >
-      <span className="ease absolute left-0 top-0 h-0 w-0 border-t-2 border-slate-400 transition-all duration-200 group-hover:w-full"></span>
-      <span className="ease absolute right-0 top-0 h-0 w-0 border-r-2 border-slate-400 transition-all duration-200 group-hover:h-full"></span>
-      <span className="ease absolute bottom-0 right-0 h-0 w-0 border-b-2 border-slate-400 transition-all duration-200 group-hover:w-full"></span>
-      <span className="ease absolute bottom-0 left-0 h-0 w-0 border-l-2 border-slate-400 transition-all duration-200 group-hover:h-full"></span>
+      <span className="absolute inset-0 rounded-lg bg-white/[0.05] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+      <span className="absolute inset-0 rounded-lg border-[0.5px] border-white/10 group-hover:border-white/20 transition-colors duration-500"></span>
 
-      {!!icon && icon}
-      <span className="">{label}</span>
+      {!!icon && <span className="relative z-10">{icon}</span>}
+      <span className="relative z-10">{label}</span>
     </Link>
   );
 }
