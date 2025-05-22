@@ -28,25 +28,37 @@ export default function HomePage() {
     <section className="">
       <motion.div
         {...getAnimateProps({ shouldReduceMotion })}
-        className="flex flex-col gap-4 mb-10 text-2xl bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-100 via-slate-300 to-slate-400 bg-clip-text text-transparent"
+        className="flex flex-col gap-4 mb-12 text-2xl"
       >
         <div className="">
-          <p className="mb-8 text-5xl text-zinc-300">
-            Hey<span className={`wave mx-4`}> 👋 </span>
+          <p className="mb-8 text-6xl font-bold bg-gradient-to-r from-white via-slate-300 to-indigo-200 bg-clip-text text-transparent">
+            Hey<span className={`wave mx-4 text-white`}> 👋 </span>
           </p>
-          I&apos;m Nafi Asib!
-          {/* <p className="text-xl">Hobbyist Maker. Product Engineer</p> */}
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-4">
+            I&apos;m Nafi Asib!
+          </h1>
+          <TypeWriter />
         </div>
-        <TypeWriter />
       </motion.div>
 
       <motion.div
-        className="mb-5 text-xl bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-100 via-slate-300 to-slate-400 bg-clip-text text-transparent"
+        className="mb-8 text-xl text-slate-300 leading-relaxed"
         {...getAnimateProps({ delay: 0.3, shouldReduceMotion })}
       >
-        <p>This is an experimental digital garden where I share my learning!</p>
+        <p className="max-w-2xl">
+          This is an experimental digital garden where I share my learning
+          journey and insights into software engineering, product development,
+          and technology!
+        </p>
       </motion.div>
-      <motion.div {...getAnimateProps({ delay: 0.5, shouldReduceMotion })}>
+
+      <motion.div
+        {...getAnimateProps({ delay: 0.5, shouldReduceMotion })}
+        className="space-y-8"
+      >
+        <h2 className="text-2xl font-semibold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent mb-6">
+          Latest Posts
+        </h2>
         <PostList />
       </motion.div>
     </section>

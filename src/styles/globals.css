@@ -7,14 +7,59 @@
   :root {
     /* For rgb(255 115 179 / <alpha-value>) */
     --color-text: 255 255 255;
+    --color-primary: 99 102 241;
+    --color-secondary: 139 92 246;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
       /* For rgb(255 115 179 / <alpha-value>) */
       --color-text: 255 255 255;
+      --color-primary: 99 102 241;
+      --color-secondary: 139 92 246;
     }
   }
+}
+
+/* Custom styles for enhanced typography */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  background: linear-gradient(
+    to right,
+    rgb(var(--color-primary)),
+    rgb(var(--color-secondary))
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.prose p {
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.prose a {
+  text-decoration: none;
+  background: linear-gradient(
+    to right,
+    rgb(var(--color-primary)),
+    rgb(var(--color-secondary))
+  );
+  background-size: 100% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: all 0.3s ease;
+}
+
+.prose a:hover {
+  color: rgb(var(--color-primary));
+  background-size: 100% 100%;
+  color: white;
 }
 
 /* source: https://jarv.is/notes/css-waving-hand-emoji/ */
