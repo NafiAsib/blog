@@ -10,7 +10,7 @@ export const rehypePrettyCodeOptions: Partial<Options> = {
 
 export const Post = defineDocumentType(() => ({
   name: "Post",
-  filePathPattern: `**/*.mdx`,
+  filePathPattern: `posts/**/*.mdx`,
   contentType: "mdx",
   fields: {
     title: {
@@ -50,14 +50,61 @@ export const Post = defineDocumentType(() => ({
   computedFields: {
     slug: {
       type: "string",
-      resolve: (doc) => doc._raw.flattenedPath,
+      resolve: (doc) => doc._raw.flattenedPath.replace(/^posts\//, ""),
+    },
+  },
+}));
+
+export const BookshelfItem = defineDocumentType(() => ({
+  name: "BookshelfItem",
+  filePathPattern: `bookshelf/*.mdx`,
+  contentType: "mdx",
+  fields: {
+    id: {
+      type: "string",
+      description: "Unique identifier for the item",
+      required: true,
+    },
+    title: {
+      type: "string",
+      description: "Title of the content",
+      required: true,
+    },
+    link: {
+      type: "string",
+      description: "URL to the content",
+      required: false,
+    },
+    category: {
+      type: "string",
+      description: "Category of the content",
+      required: true,
+    },
+    medium: {
+      type: "string",
+      description: "Type of content medium",
+      required: true,
+    },
+    tags: {
+      type: "list",
+      description: "Tags associated with the content",
+      required: true,
+      of: {
+        type: "string",
+      },
+    },
+  },
+  computedFields: {
+    slug: {
+      type: "string",
+      resolve: (doc) => doc._raw.flattenedPath.replace(/^bookshelf\//, ""),
     },
   },
 }));
 
 export default makeSource({
-  contentDirPath: "posts",
-  documentTypes: [Post],
+  contentDirPath: "./contents",
+  documentTypes: [Post, BookshelfItem],
   mdx: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [[rehypePrettyCode, rehypePrettyCodeOptions]],

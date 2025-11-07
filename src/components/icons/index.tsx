@@ -104,3 +104,17 @@ export const Heart = ({ className, ...rest }: SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
+
+export const Bookshelf = ({ className, ...rest }: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      className={cn("w-5 h-5", className)}
+      {...rest}
+    >
+      <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v1a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 8a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1V8zM11 7a1 1 0 011-1h4a1 1 0 011 1v8a1 1 0 01-1 1h-4a1 1 0 01-1-1V7z" />
+    </svg>
+  );
+};

@@ -1,7 +1,9 @@
 "use client";
+import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import PostList from "@/components/PostList";
 import { TypeWriter } from "@/components/TypeWriter";
+import { BookMarked, BookMarkedIcon } from "lucide-react";
 
 const initial = {
   y: 10,
@@ -50,8 +52,23 @@ export default function HomePage() {
         </p>
       </motion.div>
 
+      {/* Navigation Links */}
       <motion.div
-        {...getAnimateProps({ delay: 0.5, shouldReduceMotion })}
+        className="mb-12"
+        {...getAnimateProps({ delay: 0.4, shouldReduceMotion })}
+      >
+        <Link
+          href="/bookshelf"
+          className="block rounded-lg transition-all duration-300"
+        >
+          <h3 className="text-lg font-semibold text-text-primary hover:text-accent mb-2 flex">
+            <BookMarkedIcon /> Bookshelf
+          </h3>
+        </Link>
+      </motion.div>
+
+      <motion.div
+        {...getAnimateProps({ delay: 0.6, shouldReduceMotion })}
         className="space-y-8"
       >
         <h2 className="text-2xl font-semibold text-text-primary mb-6">
