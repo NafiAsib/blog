@@ -12,8 +12,11 @@ export default function PostList() {
     <div className="flex flex-col gap-y-6">
       {pathname !== "/" ? (
         <div className="mb-6 text-center">
-          <Link href="/">
-            <span className="text-center text-sm font-bold uppercase text-slate-100">
+          <Link
+            href="/"
+            className="hover:text-accent transition-all duration-500"
+          >
+            <span className="text-center text-sm font-bold uppercase">
               Back to home
             </span>
           </Link>

@@ -31,24 +31,22 @@ export default function HomePage() {
         className="flex flex-col gap-4 mb-12 text-2xl"
       >
         <div className="">
-          <p className="mb-8 text-6xl font-bold bg-gradient-to-r from-white via-slate-300 to-indigo-200 bg-clip-text text-transparent">
-            Hey<span className={`wave mx-4 text-white`}> 👋 </span>
+          <p className="mb-8 text-6xl font-bold text-text-primary">
+            Hey<span className={`wave mx-4 text-text-primary`}> 👋🏻 </span>
           </p>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-4">
-            I&apos;m Nafi Asib!
-          </h1>
+          <h1 className="text-4xl font-bold mb-4">I&apos;m Nafi Asib!</h1>
           <TypeWriter />
         </div>
       </motion.div>
 
       <motion.div
-        className="mb-8 text-xl text-slate-300 leading-relaxed"
+        className="mb-8 text-xl text-text-secondary leading-relaxed"
         {...getAnimateProps({ delay: 0.3, shouldReduceMotion })}
       >
         <p className="max-w-2xl">
-          This is an experimental digital garden where I share my learning
-          journey and insights into software engineering, product development,
-          and technology!
+          Welcome to my experimental digital garden! Here I occassionally share
+          my learning journey and insights into software engineering, product
+          development, and technology in general!
         </p>
       </motion.div>
 
@@ -56,7 +54,7 @@ export default function HomePage() {
         {...getAnimateProps({ delay: 0.5, shouldReduceMotion })}
         className="space-y-8"
       >
-        <h2 className="text-2xl font-semibold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent mb-6">
+        <h2 className="text-2xl font-semibold text-text-primary mb-6">
           Latest Posts
         </h2>
         <PostList />

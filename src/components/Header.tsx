@@ -27,8 +27,8 @@ export default function Header() {
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="mb-10 py-3 px-4 top-0 sticky w-full bg-slate-800/50 rounded-2xl bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-20 
-      border border-white/10 shadow-lg flex items-center justify-between gap-x-3"
+      className="mb-10 py-3 px-4 top-0 sticky w-full bg-surface/80 rounded-2xl backdrop-filter backdrop-blur-sm
+      border border-border shadow-sm flex items-center justify-between gap-x-3"
     >
       <motion.div
         whileHover={{ scale: 1.1, rotate: 5 }}
@@ -46,14 +46,14 @@ export default function Header() {
         <AnimatedBorderLink
           href="/"
           icon={
-            <Home className="group-hover:text-indigo-400 transition-colors duration-300" />
+            <Home className="group-hover:text-accent transition-colors duration-300" />
           }
           label="Home"
         />
         <AnimatedBorderLink
           href="/posts"
           icon={
-            <Book className="group-hover:text-indigo-400 transition-colors duration-300" />
+            <Book className="group-hover:text-accent transition-colors duration-300" />
           }
           label="All Notes"
         />

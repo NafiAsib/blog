@@ -8,7 +8,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        text: "rgb(var(--color-text) / <alpha-value>)",
+        bg: "rgb(var(--color-bg) / <alpha-value>)",
+        "text-primary": "rgb(var(--color-text-primary) / <alpha-value>)",
+        "text-secondary": "rgb(var(--color-text-secondary) / <alpha-value>)",
+        "text-muted": "rgb(var(--color-text-muted) / <alpha-value>)",
+        accent: "rgb(var(--color-accent) / <alpha-value>)",
+        border: "rgb(var(--color-border) / <alpha-value>)",
+        surface: "rgb(var(--color-surface) / <alpha-value>)",
+        "surface-hover": "rgb(var(--color-surface-hover) / <alpha-value>)",
+        "surface-soft": "rgb(var(--color-surface-soft) / <alpha-value>)",
+        // Keep the old text color for compatibility during transition
+        text: "rgb(var(--color-text-primary) / <alpha-value>)",
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)"],

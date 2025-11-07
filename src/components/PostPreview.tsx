@@ -13,25 +13,25 @@ export default function PostPreview({ post }: Props) {
     <Link
       href={`posts/${post.slug}`}
       className={cn(
-        "text-left block overflow-hidden rounded-2xl bg-white/5 p-7 shadow-surface-elevation-low transition duration-300 hover:bg-white/10 hover:shadow-surface-elevation-medium",
-        "border border-white/10 backdrop-blur-sm",
-        "transform hover:scale-[1.02] hover:-translate-y-1",
-        "group"
+        "text-left block overflow-hidden rounded-2xl bg-surface p-7 transition duration-300 hover:bg-surface-soft",
+        "border border-border",
+        "transform hover:scale-[1.01] hover:-translate-y-0.5",
+        "group shadow-sm hover:shadow-md"
       )}
     >
-      <h2 className="text-xl font-bold text-zinc-300 group-hover:text-white transition-colors duration-300">
+      <h2 className="text-xl font-bold text-text-primary group-hover:text-accent transition-colors duration-300">
         {post.title}
       </h2>
       <time
         dateTime={post.publishedAt}
-        className="block text-sm font-semibold text-slate-400 mt-2 group-hover:text-slate-300 transition-colors duration-300"
+        className="block text-sm font-semibold text-text-muted mt-2 group-hover:text-text-secondary transition-colors duration-300"
       >
         {format(parseISO(post.publishedAt), "MMMM d, yyyy")}
       </time>
-      <p className="mt-4 text-slate-300 group-hover:text-slate-200 transition-colors duration-300 line-clamp-3">
+      <p className="mt-4 text-text-secondary group-hover:text-text-primary transition-colors duration-300 line-clamp-3">
         {post.description}
       </p>
-      <div className="mt-4 flex items-center text-slate-400 group-hover:text-slate-300 transition-colors duration-300">
+      <div className="mt-4 flex items-center text-text-muted group-hover:text-accent transition-colors duration-300">
         <span className="text-sm">Read more</span>
         <svg
           className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300"

@@ -56,7 +56,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <PHProvider>
         <body
           className={cn(
-            "max-w-2xl antialiased font-sans bg-gradient-to-r from-gray-700 to-gray-800 mx-auto mt-20 mb-40 px-4 sm:px-16",
+            "max-w-2xl antialiased font-sans bg-bg text-text-primary mx-auto mt-20 mb-40 px-4 sm:px-16",
             GeistSans.variable,
             GeistMono.variable
           )}

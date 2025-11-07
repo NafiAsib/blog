@@ -10,9 +10,9 @@ export interface IRedoAnimTextProps {
 export function RedoAnimText({ delay }: IRedoAnimTextProps) {
   const textIndex = useMotionValue(0);
   const texts = [
-    "AI Engineer",
+    "ML Researcher",
     "Software Engineer",
-    "Designer",
+    "Occassional Designer",
     "Product Engineer",
     "Fool-stack guy",
   ];
@@ -71,15 +71,15 @@ export function CursorBlinker() {
     <motion.div
       variants={cursorVariants}
       animate="blinking"
-      className="inline-block h-5 w-[1px] translate-y-1 bg-zinc-300"
+      className="inline-block h-5 w-[1px] translate-y-1 bg-text-secondary"
     />
   );
 }
 
 export function TypeWriter() {
   return (
-    <span className="text-zinc-300 text-xl">
-      Hobbyist Maker. <RedoAnimText delay={1} />
+    <span className="text-text-secondary text-xl">
+      a Hobbyist Maker, <RedoAnimText delay={1} />
       <CursorBlinker />
     </span>
   );
